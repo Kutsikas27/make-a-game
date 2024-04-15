@@ -42,14 +42,6 @@ class Player {
     }
 
     characterLoop() {
-        this.movement();
-        this.physics();
-        this.colisions();
-        this.updatePlayerPos();
-    }
-
-    // handles the movement of the character
-    movement() {
         if (this.up && !this.isJumping) {
             this.y_velocity -= 40;
             this.isJumping = true;
@@ -63,18 +55,14 @@ class Player {
             this.x_velocity += this.speed;
         }
 
+        this.y_velocity += 1.75; // gravity
         this.x += this.x_velocity;
         this.y += this.y_velocity;
-    }
-
-    physics() {
-        this.y_velocity += 1.75; // gravity
+        
         this.x_velocity *= 0.9; // friction
         this.y_velocity *= 0.9; // friction
-    }
 
-    colisions() {
-        // colision detection with obstacles
+        // colision detection
         obstacleArray.forEach(obs => {
             if (colision(this.div.getBoundingClientRect(), obs.div.getBoundingClientRect())) {
                 this.colisionSide(this.div.getBoundingClientRect(), obs.div.getBoundingClientRect(), obs);
@@ -90,8 +78,8 @@ class Player {
         
         if (this.x_velocity < 0.1 && this.x_velocity > -0.1) this.x_velocity = 0;
 
-        if (this.x < 3) {
-            this.x = 3;
+        if (this.x < 0) {
+            this.x = 0;
             this.x_velocity = 0;
         }
 
@@ -99,22 +87,15 @@ class Player {
             this.x = gameWidth - this.width;
             this.x_velocity = 0;
         }
-    }
-    // moves the character in the level
-    updatePlayerPos() { 
+
+        console.log(this.y)
+        
+        // moves the character in the div daw
         this.div.style.left = `${this.x}px`;
         this.div.style.top = `${this.y}px`;
 
         // moves the camera
-        this.updateCameraPos(this);
-    }
-
-    updateCameraPos(player) {
-        if (player.x < 500) {
-            level.div.style.left = '0px';
-        } else {
-            level.div.style.left = `${-player.x + 500}px`;
-        }
+        gameWindow.style.left = `${-this.x + 500}px`;
     }
     
     // checks the what side of the object the coliision is happening
@@ -127,22 +108,22 @@ class Player {
                 // bottom
                 obs.death();
                 this.y_velocity = 0;
-                this.y = obs.y + obs.height;
+                this.y = obs.y + this.height;
             } else { 
                 // top
                 this.isJumping = false;
                 this.y_velocity = 0;
-                this.y = obs.y - obs.height;
+                this.y = obs.y - this.height;
             }
         } else {
             if (vectorX > 0) {
                 // left
                 this.x_velocity = 0;
-                this.x = obs.x + obs.width;
+                this.x = obs.x + this.width;
             } else {
                 // right
                 this.x_velocity = 0;
-                this.x = obs.x - obs.width;
+                this.x = obs.x - this.width;
             }
         }
     }
@@ -179,10 +160,10 @@ class Level {
     }
 }
 
-const colision = (obj1, obj2) => obj1.left < obj2.right &&
-    obj1.right > obj2.left &&
-    obj1.top < obj2.bottom &&
-    obj1.bottom > obj2.top;
+const colision = (obj1, obj2) => obj1.left <= obj2.right &&
+    obj1.right >= obj2.left &&
+    obj1.top <= obj2.bottom &&
+    obj1.bottom >= obj2.top;
 
 let level = new Level();
 let player = new Player();
