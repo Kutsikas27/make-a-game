@@ -3,47 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>make-a-game</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="camera">
-      <div id="fps"></div>
-      <div id="gameWindow">
-        <div
-          id="player"
-          style="
-            width: 50px;
-            height: 50px;
-            background-color: red;
-            position: absolute;
-          "
-        ></div>
-      </div>
+    <div class="scoreBoard">
+      <span class="score">Score: 0</span>
+      <span class="lives">Lives: 5</span>
     </div>
-    <script src="script.js"></script>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-      }
-
-      #fps {
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
-        background-color: black;
-      }
-
-      #gameWindow {
-        background-image: url("backgroundLayers/image.png");
-        position: relative;
-      }
-
-      .camera {
-        overflow: hidden;
-        position: relative;
-      }
-    </style>
+    <div class="grid"></div>
+    <button class="btn">Start</button>
+    <div class="ghost">
+      <div class="eyes eyeleft"></div>
+      <div class="eyes eyeright"></div>
+    </div>
+    <div class="player">
+      <div class="eye"></div>
+      <div class="mouth"></div>
+    </div>
+    <script src="js/board.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/ghost.js"></script>
+    <script src="levels/level1.js"></script>
+    <script src="index.js"></script>
   </body>
 </html>
