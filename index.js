@@ -3,6 +3,7 @@
 const board = ["pink", "blue", "green"];
 const myBoard = [];
 const ghosts = [];
+let ghostcool = 0;
 const game = {
   x: "",
   y: "",
@@ -65,9 +66,13 @@ const move = () => {
   if (game.inplay) {
     player.cool--; //player cooldown slowdown
     if (player.cool < 0) {
-      moveGhost();
+      player.cool = -1;
       movePlayer();
-      player.cool = player.speed; // set cooloff
+    }
+    ghostcool--;
+    if (ghostcool < 0) {
+      moveGhost();
+      ghostcool = 4;
     }
     if (!player.pause) {
       // add 60 fps cap for TESTING PURPOSES ************************* remove later
@@ -152,19 +157,24 @@ const moveGhost = () => {
 
 const movePlayer = () => {
   const tempPos = player.pos; //current pos
-  if (keys.ArrowRight) {
+ if (keys.ArrowRight) {
     player.pos += 1;
     game.eye.style.left = "20%";
     game.mouth.style.left = "60%";
+    player.cool = player.speed; // set cooloff
   } else if (keys.ArrowLeft) {
     player.pos -= 1;
     game.eye.style.left = "60%";
     game.mouth.style.left = "0%";
+    player.cool = player.speed; // set cooloff
   } else if (keys.ArrowUp) {
     player.pos -= game.size;
+    player.cool = player.speed; // set cooloff
   } else if (keys.ArrowDown) {
     player.pos += game.size;
-  }
+    player.cool = player.speed; // set cooloff
+  } 
+
   const newPlace = myBoard[player.pos]; //future position
   if (newPlace.t === 1 || newPlace.t === 4) {
     player.pos = tempPos;
