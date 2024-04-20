@@ -8,14 +8,14 @@ const game = {
   y: "",
   h: 25,
   size: 32,
-  ghosts: 2,
+  ghosts: 3,
   inplay: false,
   startGhost: [],
 };
 
 const player = {
   pos: 32,
-  speed: 6,
+  speed: 4,
   cool: 0,
   pause: false,
   score: 0,
@@ -65,14 +65,16 @@ const move = () => {
   if (game.inplay) {
     player.cool--; //player cooldown slowdown
     if (player.cool < 0) {
-      console.log("Test");
       moveGhost();
       movePlayer();
       player.cool = player.speed; // set cooloff
     }
     if (!player.pause) {
-      myBoard[player.pos].append(game.player);
-      player.play = requestAnimationFrame(move);
+      // add 60 fps cap for TESTING PURPOSES ************************* remove later
+      setTimeout(function () {
+        myBoard[player.pos].append(game.player);
+        player.play = requestAnimationFrame(move);
+      }, 1000 / 60);
     }
   }
 };

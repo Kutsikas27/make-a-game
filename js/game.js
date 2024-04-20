@@ -17,6 +17,7 @@ const createGame = () => {
 };
 
 const startGame = () => {
+  startStopwatch();
   myBoard.length = 0;
   ghosts.length = 0;
   game.grid.innerHTML = "";
@@ -49,6 +50,7 @@ const gameReset = () => {
   }
 };
 const endGame = () => {
+  stopStopwatch();
   player.gameWin = false;
   startGameBtn.style.display = "block";
 };
