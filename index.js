@@ -1,5 +1,4 @@
 //@ts-nocheck
-
 const board = ["pink", "blue", "green"];
 const myBoard = [];
 const ghosts = [];
@@ -7,7 +6,7 @@ let ghostcool = 0;
 const game = {
   x: "",
   y: "",
-  h: 25,
+  h: (window.innerHeight - 75- 80) / 32, // window height - scoreboard - padding / grid size
   size: 32,
   ghosts: 3,
   inplay: false,
@@ -169,7 +168,7 @@ const movePlayer = () => {
     player.cool = player.speed; // set cooloff
   } else if (keys.ArrowUp) {
     player.pos -= game.size;
-    player.cool = player.speed; // set cooloff
+    player.cool = player.speed; // set cooloffS
   } else if (keys.ArrowDown) {
     player.pos += game.size;
     player.cool = player.speed; // set cooloff
