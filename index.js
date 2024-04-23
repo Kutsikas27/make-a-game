@@ -6,7 +6,7 @@ let ghostcool = 0;
 const game = {
   x: "",
   y: "",
-  h: (window.innerHeight - 75- 80) / 32, // window height - scoreboard - padding / grid size
+  h: (window.innerHeight - 75 - 80) / 32, // window height - scoreboard - padding / grid size
   size: 32,
   ghosts: 3,
   inplay: false,
@@ -156,7 +156,7 @@ const moveGhost = () => {
 
 const movePlayer = () => {
   const tempPos = player.pos; //current pos
- if (keys.ArrowRight) {
+  if (keys.ArrowRight) {
     player.pos += 1;
     game.eye.style.left = "20%";
     game.mouth.style.left = "60%";
@@ -172,7 +172,7 @@ const movePlayer = () => {
   } else if (keys.ArrowDown) {
     player.pos += game.size;
     player.cool = player.speed; // set cooloff
-  } 
+  }
 
   const newPlace = myBoard[player.pos]; //future position
   if (newPlace.t === 1 || newPlace.t === 4) {
@@ -194,6 +194,11 @@ const movePlayer = () => {
     myBoard[player.pos].innerHTML = "";
     player.score += 10;
     updateScoreAndLives();
+    newPlace.t = 0;
+  }
+  if (newPlace.t == 5) {
+    addSeconds(30);
+    myBoard[player.pos].innerHTML = "";
     newPlace.t = 0;
   }
   if (player.pos !== tempPos) {

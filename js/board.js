@@ -24,6 +24,11 @@ const drawBoard = (val) => {
 
     game.startGhost.push(myBoard.length);
   }
+  if (val === 5) {
+    const dot = document.createElement("div");
+    dot.classList.add("extraTime");
+    div.append(dot);
+  }
   game.grid.append(div);
   myBoard.push(div);
   div.t = val;

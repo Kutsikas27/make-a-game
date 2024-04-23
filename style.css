@@ -127,7 +127,16 @@ body {
   margin: auto;
 }
 .hideout {
-  background-color: #ddd;
+  background-color: #2d3928;
   width: 100%;
   height: 100%;
+}
+.extraTime {
+  position: absolute;
+  left: 25%;
+  top: 25%;
+  width: 50%;
+  height: 50%;
+  background-color: rgb(105, 47, 167);
+  border-radius: 50%;
 }
