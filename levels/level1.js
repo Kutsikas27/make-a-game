@@ -2,8 +2,8 @@
 // 2 = path
 // 3 - superDot
 // 4 = hideout
-//5 = extraTime
-//26 = exit
+// 5 = extraTime
+// 26 = exit
 
 const tempBoard = [
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
