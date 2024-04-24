@@ -9,11 +9,12 @@ const startStopwatch = () => {
   }
 };
 
+
 function stopStopwatch() {
-  clearInterval(stopwatchInterval); // stop the interval
+  stopwatchInterval = clearInterval(stopwatchInterval); // clear the interval
   const remainingTime = startTime - new Date().getTime(); // calculate remaining time
   return remainingTime;
-}
+};
 
 function resetStopwatch() {
   stopStopwatch(); // stop the interval
