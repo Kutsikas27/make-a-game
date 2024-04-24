@@ -105,6 +105,12 @@ const applyPowerUp = () => {
   }
 };
 
+const stopPowerUp = () => {
+  player.powerUp = false;
+  tempPower = 1;
+  player.powerCount = 0;
+};
+
 const moveGhost = () => {
   applyPowerUp();
   ghosts.forEach((ghost, i) => {

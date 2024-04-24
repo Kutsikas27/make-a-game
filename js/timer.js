@@ -1,28 +1,30 @@
 //@ts-nocheck
 let startTime;
 let stopwatchInterval;
+let remainingTime = 60 * 1000;
 
 const startStopwatch = () => {
   if (!stopwatchInterval) {
-    startTime = new Date().getTime() + 1 * 60 * 1000; // Set start time to current time plus 5 minutes
+    startTime = new Date().getTime() + remainingTime; // Set start time to current time plus 5 minutes
     stopwatchInterval = setInterval(updateStopwatch, 1000);
   }
 };
 
 function stopStopwatch() {
   stopwatchInterval = clearInterval(stopwatchInterval); // clear the interval
-  const remainingTime = startTime - new Date().getTime(); // calculate remaining time
-  return remainingTime;
+  remainingTime = startTime - new Date().getTime(); // calculate remaining time
 };
+
+const toggleStopwatch = () => (stopwatchInterval) ? stopStopwatch() : startStopwatch();
 
 function resetStopwatch() {
   stopStopwatch(); // stop the interval
-  elapsedPausedTime = 0; // reset the elapsed paused time variable
+  remainingTime = 60 * 1000;
   document.getElementById("stopwatch").innerHTML = "00:01:00"; // reset the display to 5 minutes
 }
 
 const updateStopwatch = () => {
-  const remainingTime = startTime - new Date().getTime();
+  remainingTime = startTime - new Date().getTime();
   if (remainingTime <= 0) {
     clearInterval(stopwatchInterval);
     endGame();
