@@ -9,7 +9,6 @@ const startStopwatch = () => {
   }
 };
 
-
 function stopStopwatch() {
   stopwatchInterval = clearInterval(stopwatchInterval); // clear the interval
   const remainingTime = startTime - new Date().getTime(); // calculate remaining time
