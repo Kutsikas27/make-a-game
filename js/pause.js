@@ -1,5 +1,5 @@
 const modal = document.getElementById("pauseModal");
-const resumeBtn = document.getElementById("resumeBtn");
+const continueBtn = document.getElementById("continueBtn");
 const restartBtn = document.getElementById("restartBtn");
 
 function toggleModal() {
@@ -10,7 +10,7 @@ function toggleModal() {
     }
 }
 
-resumeBtn.addEventListener("click", () => {
+continueBtn.addEventListener("click", () => {
     pauseGame();
 });
 
