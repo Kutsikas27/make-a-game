@@ -10,7 +10,10 @@
     <div class="scoreBoard">
       <div id="stopwatch">00:00:00</div>
       <span class="score">Score: 0</span>
-      <span class="lives">Lives: 5</span>
+      <span class="lives"> 
+        <img src="img/pixil-frame-0.png">
+        5
+      </span>
     </div>
     <div class="grid"></div>
     <button class="btn">Start</button>
@@ -22,6 +25,18 @@
       <div class="eye"></div>
       <div class="mouth"></div>
     </div>
+
+    <!-- Pause menu -->
+    <div class="modal-container" id="pauseModal">
+        <p>Paused</p>
+        <button class="pause-Button" id="resumeBtn">Resume</button>
+        <button class="pause-Button" id="restartBtn">Restart</button>
+    </div>
+
+    <!-- Link to a 16-bit font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P">
+
+    <script src="js/pause.js"></script>
     <script src="js/timer.js"></script>
     <script src="js/board.js"></script>
     <script src="js/game.js"></script>

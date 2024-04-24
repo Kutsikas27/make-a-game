@@ -8,17 +8,19 @@ const startStopwatch = () => {
     stopwatchInterval = setInterval(updateStopwatch, 1000);
   }
 };
+
 function stopStopwatch() {
-  clearInterval(stopwatchInterval); // stop the interval
+  stopwatchInterval = clearInterval(stopwatchInterval); // clear the interval
   const elapsedTime = new Date().getTime() - startTime; // calculate elapsed paused time
   return elapsedTime;
-}
+};
 
 function resetStopwatch() {
   stopStopwatch(); // stop the interval
   elapsedPausedTime = 0; // reset the elapsed paused time variable
   document.getElementById("stopwatch").innerHTML = "00:00:00"; // reset the display
-}
+};
+
 const updateStopwatch = () => {
   const currentTime = new Date().getTime();
   const elapsedTime = currentTime - startTime;

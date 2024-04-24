@@ -6,7 +6,7 @@ let ghostcool = 0;
 const game = {
   x: "",
   y: "",
-  h: (window.innerHeight - 75- 80) / 32, // window height - scoreboard - padding / grid size
+  h: (window.innerHeight - 75 - 80) / 32, // window height - scoreboard - padding / grid size
   size: 32,
   ghosts: 3,
   inplay: false,
@@ -48,7 +48,10 @@ document.addEventListener("keydown", (e) => {
   if (e.code in keys) {
     keys[e.code] = true;
   }
-  if (!game.inplay && !player.pause) {
+  if (e.code === "Escape") {// pausees the game 
+    pauseGame(); 
+  }
+  if (!game.inplay && !player.pause) { // starts the game
     player.play = requestAnimationFrame(move);
     game.inplay = true;
   }
@@ -58,6 +61,7 @@ document.addEventListener("keyup", (e) => {
     keys[e.code] = false;
   }
 });
+
 
 startGameBtn.addEventListener("click", startGame);
 
