@@ -17,7 +17,6 @@ continueBtn.addEventListener("click", () => {
 restartBtn.addEventListener("click", () => {
     pauseGame();
     resetStopwatch();
-    gameReset();
     startGame();
     if (player.powerUp) {
         stopPowerUp();
