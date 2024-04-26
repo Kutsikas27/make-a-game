@@ -15,7 +15,7 @@ const game = {
 
 const player = {
   pos: 32,
-  speed: 4,
+  speed: 6,
   cool: 0,
   pause: false,
   score: 0,
@@ -65,8 +65,38 @@ document.addEventListener("keyup", (e) => {
 
 startGameBtn.addEventListener("click", startGame);
 
+let frames = 0;
+let prevTime = Date.now();
+
 const move = () => {
+  // FPS counter
+  const currentTime = Date.now();
+  frames++;
+  if (currentTime - prevTime >= 1000) {
+    console.log("fps: ", frames);
+    frames = 0;
+    prevTime = currentTime;
+  }
+  
   if (game.inplay) {
+    
+    // check if player is caught by ghost
+    if (ghosts.some((ghost) => ghost.pos === player.pos)) {
+      if (player.powerUp) {
+        ghosts.forEach((ghost, i) => {
+          if (ghost.pos === player.pos) {
+            ghost.style.backgroundColor = "black";
+            ghost.style.opacity = "0.5";
+            ghost.pos = game.startGhost[i];
+            myBoard[ghost.pos].append(ghost);
+          }
+        });
+      } else {
+        player.lives--;
+        updateScoreAndLives();
+        gameReset();
+      }
+    }
     player.cool--; //player cooldown slowdown
     if (player.cool < 0) {
       player.cool = -1;
@@ -75,14 +105,14 @@ const move = () => {
     ghostcool--;
     if (ghostcool < 0) {
       moveGhost();
-      ghostcool = 4;
+      (player.powerUp) ? ghostcool = 20 : ghostcool = 10;
     }
     if (!player.pause) {
       // add 60 fps cap for TESTING PURPOSES ************************* remove later
-      setTimeout(function () {
+      // setTimeout(function () {
         myBoard[player.pos].append(game.player);
         player.play = requestAnimationFrame(move);
-      }, 1000 / 60);
+      // }, 1000 / 60);
     }
   }
 };
@@ -126,9 +156,8 @@ const moveGhost = () => {
     myBoard[ghost.pos].append(ghost);
     ghost.counter--;
     const oldPos = ghost.pos; //original ghost position
+    findDirection(ghost);
     if (ghost.counter <= 0) {
-      changeDirection(ghost);
-    } else {
       if (ghost.dx == 0) {
         ghost.pos -= game.size;
       }
@@ -143,23 +172,10 @@ const moveGhost = () => {
       }
     }
 
-    if (player.pos === ghost.pos) {
-      if (player.powerCount > 0) {
-        player.score += 100;
-
-        ghost.pos = game.startGhost[i];
-      } else {
-        player.lives--;
-        updateScoreAndLives();
-        gameReset();
-      }
-    }
     const valGhost = myBoard[ghost.pos]; //future of ghost pos
     if (valGhost.t == 1) {
       ghost.pos = oldPos;
-      changeDirection(ghost);
     }
-
     myBoard[ghost.pos].append(ghost);
   });
 };

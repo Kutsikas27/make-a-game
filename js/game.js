@@ -1,6 +1,7 @@
 //@ts-nocheck
 
-const startGameBtn = document.querySelector(".btn");
+let startGameBtn = document.querySelector(".btn");
+
 const createGame = () => {
   for (let i = 0; i < game.ghosts; i++) {
     createGhost();
@@ -22,12 +23,8 @@ const startGame = () => {
   ghosts.length = 0;
   game.grid.innerHTML = "";
   game.x = "";
-  if (!player.gameWin) {
-    player.score = 0;
-  } else {
-    player.gameWin = false;
-  }
-
+  player.lives = 5;
+  (!player.gameWin) ? player.score = 0 : player.gameWin = false;
   player.gameOver = false;
   createGame();
   updateScoreAndLives();
@@ -50,11 +47,13 @@ const gameReset = () => {
   }
 };
 const endGame = () => {
+  gameOverModal.style.display = "block";
   stopStopwatch();
   player.gameWin = false;
   startGameBtn.style.display = "block";
 };
 const playerWins = () => {
+  gameWinModal.style.display = "block";
   player.gameWin = true;
   game.inplay = false;
   player.pause = true;

@@ -27,9 +27,21 @@
 
     <!-- Pause menu -->
     <div class="modal-container" id="pauseModal">
-        <p>Paused</p>
-        <button class="pause-Button" id="continueBtn">continue</button>
-        <button class="pause-Button" id="restartBtn">Restart</button>
+      <p>Paused</p>
+      <button class="pause-Button" onclick="pauseGame()">continue</button>
+      <button class="pause-Button" onclick="restartGame()">Restart</button>
+    </div>
+
+    <!-- Game Over menu -->
+    <div class="modal-container" id="gameOverModal">
+      <p>GAME OVER!</p>
+      <button class="pause-Button" onclick="restartGame()">Restart</button>
+    </div>
+
+    <!-- Win menu -->
+    <div class="modal-container" id="winModal">
+      <p>YOU WIN!</p>
+      <button class="pause-Button" onclick="restartGame()">Restart</button>
     </div>
 
     <script src="js/pause.js"></script>

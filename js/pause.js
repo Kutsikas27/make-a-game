@@ -1,40 +1,39 @@
-const modal = document.getElementById("pauseModal");
-const continueBtn = document.getElementById("continueBtn");
-const restartBtn = document.getElementById("restartBtn");
+const pauseModal = document.getElementById("pauseModal");
+const gameOverModal = document.getElementById("gameOverModal");
+const gameWinModal = document.getElementById("winModal");
 
-function toggleModal() {
-    if (modal.style.display === "block") {
-        modal.style.display = "none";
+function togglepauseModal() {
+    if (pauseModal.style.display === "block") {
+        pauseModal.style.display = "none";
     } else {
-        modal.style.display = "block";
+        pauseModal.style.display = "block";
     }
 }
 
-continueBtn.addEventListener("click", () => {
-    pauseGame();
-});
-
-restartBtn.addEventListener("click", () => {
-    pauseGame();
+const restartGame = () => {
+    gameOverModal.style.display = "none";
+    gameWinModal.style.display = "none";
+    if (pauseModal.style.display === "block" ||
+        gameOverModal.style.display === "block" ||
+        gameWinModal.style.display === "block"
+    ) pauseGame();
     resetStopwatch();
     startGame();
     if (player.powerUp) {
         stopPowerUp();
         game.player.style.backgroundColor = "lightgreen";
     }
-});
+}
 
 function pauseGame() {
-    if (game.inplay) {
       player.pause = !player.pause;
       if (player.pause) {
         toggleStopwatch();
         window.cancelAnimationFrame(player.play);
-        toggleModal();
+        togglepauseModal();
       } else {
         toggleStopwatch();
         player.play = requestAnimationFrame(move);
-        toggleModal();
+        togglepauseModal();
       }
-    }
 }
