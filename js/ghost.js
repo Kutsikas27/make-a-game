@@ -36,8 +36,9 @@ function findDirection(ghost) {
     }
   });
 
-  // if the ghost is at a junction, it will not turn back
+  // if the ghost doesnt see the player, it will move randomly
   if (!seesPlayer) {
+  // if the ghost is at a junction, it will not turn back
     if (directions.length > 1) {
       const oppositeDirection = oppositeDirections[ghost.dx];
       const index = directions.indexOf(oppositeDirection);
