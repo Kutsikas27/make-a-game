@@ -79,7 +79,6 @@ const move = () => {
   }
   
   if (game.inplay) {
-    
     // check if player is caught by ghost
     if (ghosts.some((ghost) => ghost.pos === player.pos)) {
       if (player.powerUp) {
@@ -97,6 +96,7 @@ const move = () => {
         gameReset();
       }
     }
+    if (!player.pause) {
     player.cool--; //player cooldown slowdown
     if (player.cool < 0) {
       player.cool = -1;
@@ -107,13 +107,9 @@ const move = () => {
       moveGhost();
       (player.powerUp) ? ghostcool = 20 : ghostcool = 10;
     }
-    if (!player.pause) {
-      // add 60 fps cap for TESTING PURPOSES ************************* remove later
-      // setTimeout(function () {
-        myBoard[player.pos].append(game.player);
-        player.play = requestAnimationFrame(move);
-      // }, 1000 / 60);
-    }
+  }
+  myBoard[player.pos].append(game.player);
+  player.play = requestAnimationFrame(move);
   }
 };
 let tempPower = 0;

@@ -29,11 +29,9 @@ function pauseGame() {
       player.pause = !player.pause;
       if (player.pause) {
         toggleStopwatch();
-        window.cancelAnimationFrame(player.play);
         togglepauseModal();
       } else {
         toggleStopwatch();
-        player.play = requestAnimationFrame(move);
         togglepauseModal();
       }
 }
