@@ -15,7 +15,7 @@ const game = {
 
 const player = {
   pos: 32,
-  speed: 6,
+  speed: 10,
   cool: 0,
   pause: false,
   score: 0,
@@ -44,14 +44,17 @@ document.addEventListener("DOMContentLoaded", () => {
   game.ghost.style.display = "none";
   game.grid.display = "none";
 });
+
 document.addEventListener("keydown", (e) => {
   if (e.code in keys) {
     keys[e.code] = true;
   }
-  if (e.code === "Escape") {// pausees the game 
-    pauseGame(); 
+  if (e.code === "Escape") {
+    // pausees the game
+    pauseGame();
   }
-  if (!game.inplay && !player.pause) { // starts the game
+  if (!game.inplay && !player.pause) {
+    // starts the game
     player.play = requestAnimationFrame(move);
     game.inplay = true;
   }
@@ -61,9 +64,36 @@ document.addEventListener("keyup", (e) => {
     keys[e.code] = false;
   }
 });
-
+let index = 0;
+const songs = ["theme.mp3", "song2.mp3", "song3.mp3", "song4.mp3", "song5.mp3"];
+const audio = new Audio(songs[index]);
+const volumeSlider = document.getElementById("volume-slider");
+const playMusic = () => {
+  console.log(index);
+  audio.src = songs[index];
+  index += 1;
+  audio.play();
+};
+audio.addEventListener("ended", playMusic);
 
 startGameBtn.addEventListener("click", startGame);
+startGameBtn.addEventListener("click", playMusic);
+volumeSlider.addEventListener("input", () => {
+  audio.volume = volumeSlider.valueAsNumber;
+});
+const muteBtn = document.getElementById("volumeIcon");
+
+muteBtn.addEventListener("click", () => {
+  if (audio.muted) {
+    audio.muted = false;
+    muteBtn.innerHTML =
+      '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-volume-up" viewBox="0 0 16 16"><path d="M9 4a.5.5 0 0 0-.812-.39L5.825 5.5H3.5A.5.5 0 0 0 3 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 9 12zm3.025 4a4.5 4.5 0 0 1-1.318 3.182L10 10.475A3.5 3.5 0 0 0 11.025 8 3.5 3.5 0 0 0 10 5.525l.707-.707A4.5 4.5 0 0 1 12.025 8"/></svg>';
+  } else {
+    audio.muted = true;
+    muteBtn.innerHTML =
+      '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-volume-up" viewBox="0 0 16 16"><path d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06m7.137 2.096a.5.5 0 0 1 0 .708L12.207 8l1.647 1.646a.5.5 0 0 1-.708.708L11.5 8.707l-1.646 1.647a.5.5 0 0 1-.708-.708L10.793 8 9.146 6.354a.5.5 0 1 1 .708-.708L11.5 7.293l1.646-1.647a.5.5 0 0 1 .708 0"/></svg>';
+  }
+});
 
 let frames = 0;
 let prevTime = Date.now();
@@ -77,39 +107,43 @@ const move = () => {
     frames = 0;
     prevTime = currentTime;
   }
-  
+
   if (game.inplay) {
     // check if player is caught by ghost
     if (ghosts.some((ghost) => ghost.pos === player.pos)) {
       if (player.powerUp) {
         ghosts.forEach((ghost, i) => {
           if (ghost.pos === player.pos) {
+            const deathSound = new Audio("Ghost.mp3");
+            deathSound.play();
             ghost.style.backgroundColor = "black";
-            ghost.style.opacity = "0.5";
+            ghost.style.opacity = "0.8";
             ghost.pos = game.startGhost[i];
             myBoard[ghost.pos].append(ghost);
           }
         });
       } else {
+        const deathSound = new Audio("Death.mp3");
+        deathSound.play();
         player.lives--;
         updateScoreAndLives();
         gameReset();
       }
     }
     if (!player.pause) {
-    player.cool--; //player cooldown slowdown
-    if (player.cool < 0) {
-      player.cool = -1;
-      movePlayer();
+      player.cool--; //player cooldown slowdown
+      if (player.cool < 0) {
+        player.cool = -1;
+        movePlayer();
+      }
+      ghostcool--;
+      if (ghostcool < 0) {
+        moveGhost();
+        player.powerUp ? (ghostcool = 20) : (ghostcool = 10);
+      }
     }
-    ghostcool--;
-    if (ghostcool < 0) {
-      moveGhost();
-      (player.powerUp) ? ghostcool = 20 : ghostcool = 10;
-    }
-  }
-  myBoard[player.pos].append(game.player);
-  player.play = requestAnimationFrame(move);
+    myBoard[player.pos].append(game.player);
+    player.play = requestAnimationFrame(move);
   }
 };
 let tempPower = 0;
@@ -206,11 +240,14 @@ const movePlayer = () => {
     if (tempDots.length === 0) {
       playerWins();
     }
+
     newPlace.t = 0;
     player.score++;
     updateScoreAndLives();
   }
+  const bonusSound = new Audio("score.mp3");
   if (newPlace.t == 3) {
+    bonusSound.play();
     player.powerCount = 100;
     player.powerUp = true;
     myBoard[player.pos].innerHTML = "";
@@ -219,6 +256,7 @@ const movePlayer = () => {
     newPlace.t = 0;
   }
   if (newPlace.t == 5) {
+    bonusSound.play();
     addSeconds(30);
     myBoard[player.pos].innerHTML = "";
     newPlace.t = 0;
