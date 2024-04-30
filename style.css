@@ -101,7 +101,7 @@ body {
 }
 .grid {
   margin: auto;
-  padding: 20px;
+  padding: 40px;
   justify-content: center;
   display: grid;
   cursor: grab;
