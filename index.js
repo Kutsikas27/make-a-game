@@ -65,10 +65,10 @@ document.addEventListener("keyup", (e) => {
   }
 });
 let index = 0;
-const deathSound = new Audio("Death.mp3");
-const bonusSound = new Audio("score.mp3");
-const ghostSound = new Audio("Ghost.mp3");
-const songs = ["theme.mp3", "song2.mp3", "song3.mp3", "song4.mp3", "song5.mp3"];
+const deathSound = new Audio("audio/Death.mp3");
+const bonusSound = new Audio("audio/score.mp3");
+const ghostSound = new Audio("audio/Ghost.mp3");
+const songs = ["audio/theme.mp3", "audio/song2.mp3", "audio/song3.mp3", "audio/song4.mp3", "audio/song5.mp3"];
 const audio = new Audio(songs[index]);
 const volumeSlider = document.getElementById("volume-slider");
 const playMusic = () => {
@@ -83,6 +83,9 @@ startGameBtn.addEventListener("click", startGame);
 startGameBtn.addEventListener("click", playMusic);
 volumeSlider.addEventListener("input", () => {
   audio.volume = volumeSlider.valueAsNumber;
+  deathSound.volume = volumeSlider.valueAsNumber;
+  bonusSound.volume = volumeSlider.valueAsNumber;
+  ghostSound.volume = volumeSlider.valueAsNumber;
 });
 const muteBtn = document.getElementById("volumeIcon");
 
