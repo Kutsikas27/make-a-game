@@ -24,7 +24,7 @@ const startGame = () => {
   game.grid.innerHTML = "";
   game.x = "";
   player.lives = 5;
-  (!player.gameWin) ? player.score = 0 : player.gameWin = false;
+  !player.gameWin ? (player.score = 0) : (player.gameWin = false);
   player.gameOver = false;
   createGame();
   updateScoreAndLives();
@@ -50,14 +50,12 @@ const endGame = () => {
   gameOverModal.style.display = "block";
   stopStopwatch();
   player.gameWin = false;
-  startGameBtn.style.display = "block";
 };
 const playerWins = () => {
   gameWinModal.style.display = "block";
   player.gameWin = true;
   game.inplay = false;
   player.pause = true;
-  startGameBtn.style.display = "block";
 };
 
 const updateScoreAndLives = () => {
