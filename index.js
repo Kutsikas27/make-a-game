@@ -115,7 +115,7 @@ const move = () => {
   const currentTime = Date.now();
   frames++;
   if (currentTime - prevTime >= 1000) {
-    console.log("fps: ", frames);
+    // console.log("fps: ", frames);
     frames = 0;
     prevTime = currentTime;
   }
@@ -127,6 +127,7 @@ const move = () => {
         ghosts.forEach((ghost, i) => {
           if (ghost.pos === player.pos) {
             ghostSound.play();
+            player.score += 50;
             ghost.style.backgroundColor = "black";
             ghost.style.opacity = "0.8";
             ghost.pos = game.startGhost[i];
@@ -156,7 +157,6 @@ const move = () => {
     player.play = requestAnimationFrame(move);
   }
 };
-let tempPower = 0;
 const applyPowerUp = () => {
   if (player.powerUp) {
     player.powerCount--;
@@ -170,29 +170,28 @@ const applyPowerUp = () => {
     if (player.powerCount <= 0) {
       player.powerUp = false;
       game.player.style.backgroundColor = "lightgreen";
-      tempPower = 1;
     }
   }
 };
 
 const stopPowerUp = () => {
   player.powerUp = false;
-  tempPower = 1;
   player.powerCount = 0;
 };
 
 const moveGhost = () => {
   applyPowerUp();
-  ghosts.forEach((ghost, i) => {
-    if (tempPower === 1) {
-      ghost.style.backgroundColor = ghost.defaultColor;
-    } else if (player.powerCount > 0) {
+  ghosts.forEach((ghost) => {
+    if (player.powerCount > 0) {
       if (player.powerCount % 2) {
         ghost.style.backgroundColor = "white";
       } else {
         ghost.style.backgroundColor = "blue";
       }
+    } else {
+      ghost.style.backgroundColor = ghost.defaultColor;
     }
+
     myBoard[ghost.pos].append(ghost);
     ghost.counter--;
     const oldPos = ghost.pos; //original ghost position
