@@ -3,12 +3,12 @@ const pauseModal = document.getElementById("pauseModal");
 const gameOverModal = document.getElementById("gameOverModal");
 const gameWinModal = document.getElementById("winModal");
 
-function togglepauseModal() {
+function togglePauseModal() {
   if (pauseModal.style.display === "block") {
     pauseModal.style.display = "none";
-  } else {
-    pauseModal.style.display = "block";
+    return;
   }
+  pauseModal.style.display = "block";
 }
 
 const restartGame = () => {
@@ -30,11 +30,6 @@ const restartGame = () => {
 
 function pauseGame() {
   player.pause = !player.pause;
-  if (player.pause) {
-    toggleStopwatch();
-    togglepauseModal();
-  } else {
-    toggleStopwatch();
-    togglepauseModal();
-  }
+  toggleStopwatch();
+  togglePauseModal();
 }

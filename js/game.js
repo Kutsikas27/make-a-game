@@ -62,8 +62,8 @@ const updateScoreAndLives = () => {
   if (player.lives <= 0) {
     game.lives.innerHTML = "GAME OVER!";
     game.gameOver = true;
-  } else {
-    game.score.innerHTML = `Score: ${player.score}`;
-    game.lives.innerHTML = `Lives: ${player.lives}`;
+    return;
   }
+  game.score.innerHTML = `Score: ${player.score}`;
+  game.lives.innerHTML = `Lives: ${player.lives}`;
 };

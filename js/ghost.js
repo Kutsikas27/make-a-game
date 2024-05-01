@@ -1,16 +1,5 @@
 //@ts-nocheck
-// const changeDirection = (ghost) => {
-//   const ghostPos = findDirection(ghost);
-//   const playerPos = findDirection(player);
-//   const ran = Math.floor(Math.random() * 10);
-//   if (ran === 0) {
-//     ghost.dx = ghostPos[0] < playerPos[0] ? 2 : 3;
-//   } else {
-//     ghost.dx = ghostPos[1] < playerPos[1] ? 1 : 0;
-//   }
 
-//   ghost.counter = Math.random() * 5 + 2;
-// };
 function findDirection(ghost) {
   let directions = [];
   let seesPlayer = false;
